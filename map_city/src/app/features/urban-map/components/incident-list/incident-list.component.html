@@ -1,0 +1,41 @@
+<section class="list-card">
+  <div class="list-header">
+    <div>
+      <span class="eyebrow">Panel</span>
+      <h2>Urban incidents</h2>
+    </div>
+    <span class="badge">{{ incidents.length }}</span>
+  </div>
+
+  @if (incidents.length) {
+    <div class="list-items">
+      @for (incident of incidents; track trackById($index, incident)) {
+        <button
+          type="button"
+          class="incident-item"
+          [class.selected]="incident.id === selectedIncidentId"
+          (click)="selectIncident.emit(incident.id)"
+        >
+          <div class="item-top">
+            <strong>{{ incident.title }}</strong>
+            <span class="status" [class.resolved]="incident.status === 'resolved'">
+              {{ incident.status }}
+            </span>
+          </div>
+
+          <p>{{ incident.description }}</p>
+
+          <div class="meta">
+            <span>{{ incident.type }}</span>
+            <span>{{ incident.street }} • {{ incident.neighborhood }}</span>
+            <span>{{ incident.createdAt | date: 'dd/MM/yyyy' }}</span>
+          </div>
+        </button>
+      }
+    </div>
+  } @else {
+    <div class="empty-state">
+      No incidents match the applied filters.
+    </div>
+  }
+</section>

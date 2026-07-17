@@ -1,0 +1,48 @@
+<div class="page-shell">
+  <header class="hero">
+    <div>
+      <span class="eyebrow">Catanduva Urban Map</span>
+      <h1>Visual monitoring of urban incidents</h1>
+      <p>
+        View critical points across the city, filter by type and status, and use
+        centralized NgRx state to keep the map and panel in sync.
+      </p>
+    </div>
+  </header>
+
+  <app-filters
+    [typeFilter]="typeFilter$ | async"
+    [statusFilter]="statusFilter$ | async"
+    (typeFilterChange)="setTypeFilter($event)"
+    (statusFilterChange)="setStatusFilter($event)"
+    (clear)="clearFilters()"
+  />
+
+  @if (error$ | async; as error) {
+    <div class="feedback error">{{ error }}</div>
+  }
+
+  @if (loading$ | async) {
+    <div class="feedback loading">Loading mock incidents...</div>
+  }
+
+  @if (incidents$ | async; as incidents) {
+    <section class="content-grid">
+      <div class="map-area">
+        <app-map
+          [incidents]="incidents"
+          [selectedIncidentId]="selectedIncidentId$ | async"
+          (selectIncident)="selectIncident($event)"
+        />
+      </div>
+
+      <div class="sidebar-area">
+        <app-incident-list
+          [incidents]="incidents"
+          [selectedIncidentId]="selectedIncidentId$ | async"
+          (selectIncident)="selectIncident($event)"
+        />
+      </div>
+    </section>
+  }
+</div>

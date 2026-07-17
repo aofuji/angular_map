@@ -4,18 +4,18 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 
 import { routes } from './app.routes';
-import { ocorrenciasEffects } from './features/mapa-urbano/store/ocorrencias.effects';
-import { ocorrenciasReducer } from './features/mapa-urbano/store/ocorrencias.reducer';
+import { incidentsEffects } from './features/urban-map/store/incidents.effects';
+import { incidentsReducer } from './features/urban-map/store/incidents.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideStore({
-      ocorrencias: ocorrenciasReducer
+      incidents: incidentsReducer
     }),
     provideEffects({
-      ocorrenciasEffects
+      incidentsEffects
     })
   ]
 };

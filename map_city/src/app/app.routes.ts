@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { MapaUrbanoPageComponent } from './features/mapa-urbano/pages/mapa-urbano-page.component';
+import { UrbanMapPageComponent } from './features/urban-map/pages/urban-map-page.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: MapaUrbanoPageComponent
+    component: UrbanMapPageComponent
   },
   {
     path: '**',

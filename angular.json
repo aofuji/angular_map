@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "mapa-urbano-catanduva": {
+    "urban-map-catanduva": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -63,10 +63,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "mapa-urbano-catanduva:build:production"
+              "buildTarget": "urban-map-catanduva:build:production"
             },
             "development": {
-              "buildTarget": "mapa-urbano-catanduva:build:development"
+              "buildTarget": "urban-map-catanduva:build:development"
             }
           },
           "defaultConfiguration": "development"
