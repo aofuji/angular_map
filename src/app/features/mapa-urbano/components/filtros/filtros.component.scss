@@ -1,0 +1,69 @@
+.filtros-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.filtros-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 0.2rem;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.filtros-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+select {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-alt);
+  color: var(--text);
+}
+
+.clear-button {
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-radius: 12px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .filtros-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,48 @@
+<div class="page-shell">
+  <header class="hero">
+    <div>
+      <span class="eyebrow">Mapa Urbano Catanduva</span>
+      <h1>Monitoramento visual de ocorrências urbanas</h1>
+      <p>
+        Visualize pontos críticos da cidade, filtre por tipo e status e use o estado
+        centralizado do NgRx para sincronizar mapa e painel.
+      </p>
+    </div>
+  </header>
+
+  <app-filtros
+    [filtroTipo]="filtroTipo$ | async"
+    [filtroStatus]="filtroStatus$ | async"
+    (filtroTipoChange)="setFiltroTipo($event)"
+    (filtroStatusChange)="setFiltroStatus($event)"
+    (clear)="clearFiltros()"
+  />
+
+  @if (error$ | async; as error) {
+    <div class="feedback error">{{ error }}</div>
+  }
+
+  @if (loading$ | async) {
+    <div class="feedback loading">Carregando ocorrências mockadas...</div>
+  }
+
+  @if (ocorrencias$ | async; as ocorrencias) {
+    <section class="content-grid">
+      <div class="map-area">
+        <app-mapa
+          [ocorrencias]="ocorrencias"
+          [ocorrenciaSelecionadaId]="ocorrenciaSelecionadaId$ | async"
+          (selectOcorrencia)="selectOcorrencia($event)"
+        />
+      </div>
+
+      <div class="sidebar-area">
+        <app-lista-ocorrencias
+          [ocorrencias]="ocorrencias"
+          [ocorrenciaSelecionadaId]="ocorrenciaSelecionadaId$ | async"
+          (selectOcorrencia)="selectOcorrencia($event)"
+        />
+      </div>
+    </section>
+  }
+</div>

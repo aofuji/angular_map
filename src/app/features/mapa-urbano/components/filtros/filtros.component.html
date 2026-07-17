@@ -1,0 +1,33 @@
+<section class="filtros-card">
+  <div class="filtros-header">
+    <div>
+      <span class="eyebrow">Filtros</span>
+      <h2>Refine as ocorrências</h2>
+    </div>
+    <button type="button" class="clear-button" (click)="clear.emit()">
+      Limpar
+    </button>
+  </div>
+
+  <div class="filtros-grid">
+    <label class="field">
+      <span>Tipo</span>
+      <select [ngModel]="filtroTipo ?? ''" (ngModelChange)="updateTipo($event)">
+        <option value="">Todos os tipos</option>
+        @for (tipo of tipos; track tipo) {
+          <option [value]="tipo">{{ tipo }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Status</span>
+      <select [ngModel]="filtroStatus ?? ''" (ngModelChange)="updateStatus($event)">
+        <option value="">Todos os status</option>
+        @for (item of status; track item) {
+          <option [value]="item">{{ item }}</option>
+        }
+      </select>
+    </label>
+  </div>
+</section>
