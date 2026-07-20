@@ -1,59 +1,90 @@
-# MapUrbanoCatanduva
+# Urban Map Catanduva
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.9.
+Aplicacao Angular 21 organizada como workspace Nx com uma estrutura inicial de
+microfrontend.
 
-## Development server
+## O que foi feito
 
-To start a local development server, run:
+- O projeto Angular CLI foi migrado para um workspace Nx integrado.
+- A aplicacao principal foi movida para `apps/urban-map-catanduva`.
+- Foi criado um microfrontend remoto em `apps/urban-map-remote`.
+- A federacao foi configurada com `@angular-architects/native-federation-v4`,
+  compativel com Angular 21.
+- O host carrega o remote em tempo de execucao pela rota `/mfe`.
+- O manifesto do host fica em
+  `apps/urban-map-catanduva/src/assets/federation.manifest.json`.
 
-```bash
-ng serve
+## Aplicacoes
+
+| App | Papel | Porta |
+| --- | --- | --- |
+| `urban-map-catanduva` | Host/shell principal | `4200` |
+| `urban-map-remote` | Microfrontend remoto | `4201` |
+
+O host espera encontrar o remote em:
+
+```text
+http://localhost:4201/remoteEntry.json
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Como buildar
 
 ```bash
-ng generate component component-name
+npm run build:remote
+npm run build
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Ou usando Nx diretamente:
 
 ```bash
-ng generate --help
+npx nx build urban-map-remote --configuration development
+npx nx build urban-map-catanduva --configuration development
 ```
 
-## Building
+## Como rodar
 
-To build the project run:
+Depois do build, suba os dois artefatos estaticos em terminais separados.
+
+Remote:
 
 ```bash
-ng build
+cd dist/apps/urban-map-remote/browser
+python3 -m http.server 4201
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Host:
 
 ```bash
-ng test
+cd dist/urban-map-catanduva/browser
+python3 -m http.server 4200
 ```
 
-## Running end-to-end tests
+Abra o host no navegador:
 
-For end-to-end (e2e) testing, run:
+```text
+http://localhost:4200
+```
+
+Use o link `Microfrontend` no topo para carregar o remote.
+
+## Scripts uteis
 
 ```bash
-ng e2e
+npm run start:remote
+npm run start:host
+npm run build:remote
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Observacao: neste ambiente, o `nx serve` encerrou imediatamente sem manter o dev
+server ativo. Por isso, o fluxo validado foi `build` + servidor estatico com
+`python3 -m http.server`.
 
-## Additional Resources
+## Arquivos principais
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `nx.json`: configuracao do workspace Nx.
+- `apps/urban-map-catanduva/project.json`: targets do host.
+- `apps/urban-map-remote/project.json`: targets do remote.
+- `apps/urban-map-catanduva/src/app/app.routes.ts`: rota `/mfe`.
+- `apps/urban-map-catanduva/src/assets/federation.manifest.json`: endereco do remote.
+- `apps/urban-map-remote/federation.config.mjs`: exposicao do componente remoto.
