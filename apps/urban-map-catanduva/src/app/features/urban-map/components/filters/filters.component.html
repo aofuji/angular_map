@@ -1,0 +1,31 @@
+<section class="filters-card">
+  <div class="filters-header">
+    <div>
+      <span class="eyebrow">Filters</span>
+      <h2>Refine incidents</h2>
+    </div>
+    <button type="button" class="clear-button" (click)="clear.emit()">Clear</button>
+  </div>
+
+  <div class="filters-grid">
+    <label class="field">
+      <span>Type</span>
+      <select [ngModel]="typeFilter ?? ''" (ngModelChange)="updateType($event)">
+        <option value="">All types</option>
+        @for (type of types; track type) {
+          <option [value]="type">{{ type }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Status</span>
+      <select [ngModel]="statusFilter ?? ''" (ngModelChange)="updateStatus($event)">
+        <option value="">All statuses</option>
+        @for (item of status; track item) {
+          <option [value]="item">{{ item }}</option>
+        }
+      </select>
+    </label>
+  </div>
+</section>

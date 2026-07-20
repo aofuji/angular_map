@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+  background: #f4f7f4;
+}
+
+.shell-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid #d8e2d8;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+}
+
+a {
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: #263428;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+a:hover,
+a.active {
+  background: #2f7d32;
+  color: #ffffff;
+}

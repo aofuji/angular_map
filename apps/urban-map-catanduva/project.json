@@ -1,0 +1,123 @@
+{
+  "name": "urban-map-catanduva",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "sourceRoot": "apps/urban-map-catanduva/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-architects/native-federation-v4:build",
+      "defaultConfiguration": "production",
+      "options": {
+        "projectName": "urban-map-catanduva",
+        "tsConfig": "apps/urban-map-catanduva/tsconfig.federation.json",
+        "cacheExternalArtifacts": true,
+        "entryPoints": [
+          "apps/urban-map-catanduva/src/main.ts"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "target": "urban-map-catanduva:esbuild:production"
+        },
+        "development": {
+          "target": "urban-map-catanduva:esbuild:development",
+          "dev": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@angular-architects/native-federation-v4:build",
+      "options": {
+        "projectName": "urban-map-catanduva",
+        "tsConfig": "apps/urban-map-catanduva/tsconfig.federation.json",
+        "target": "urban-map-catanduva:serve-original:development",
+        "rebuildDelay": 500,
+        "cacheExternalArtifacts": true,
+        "dev": true,
+        "devServer": true,
+        "port": 4200,
+        "entryPoints": [
+          "apps/urban-map-catanduva/src/main.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@angular/build:unit-test"
+    },
+    "esbuild": {
+      "executor": "@angular/build:application",
+      "defaultConfiguration": "production",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "browser": "apps/urban-map-catanduva/src/main.ts",
+        "tsConfig": "apps/urban-map-catanduva/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "public"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/urban-map-catanduva/src/assets",
+            "output": "assets"
+          }
+        ],
+        "styles": [
+          "apps/urban-map-catanduva/src/styles.scss",
+          "node_modules/leaflet/dist/leaflet.css"
+        ],
+        "outputPath": "dist/urban-map-catanduva",
+        "polyfills": [
+          "es-module-shims"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kB",
+              "maximumError": "1MB"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kB",
+              "maximumError": "8kB"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      }
+    },
+    "serve-original": {
+      "executor": "@nx/angular:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4200,
+        "watch": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "urban-map-catanduva:esbuild:production"
+        },
+        "development": {
+          "buildTarget": "urban-map-catanduva:esbuild:development"
+        }
+      }
+    }
+  }
+}
